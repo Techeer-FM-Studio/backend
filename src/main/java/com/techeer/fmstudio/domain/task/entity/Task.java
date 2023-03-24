@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Entity
@@ -24,6 +25,9 @@ public class Task extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private Long id;
+
+    @OneToMany(mappedBy = "task")
+    private Set<SharedTask> sharedTaskSet;
 
     @Column(nullable = false)
     @NotBlank
