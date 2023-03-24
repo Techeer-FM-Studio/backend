@@ -20,4 +20,8 @@ public class SharedMember extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_member_id", nullable = false)
+    private TestMember testMember;
 }
