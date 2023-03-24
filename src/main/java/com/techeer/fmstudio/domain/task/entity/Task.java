@@ -3,13 +3,11 @@ package com.techeer.fmstudio.domain.task.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-import com.sun.istack.NotNull;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -27,7 +25,7 @@ public class Task extends BaseEntity {
     private Long id;
 
     @OneToMany(mappedBy = "task")
-    private Set<SharedTask> sharedTaskSet;
+    private Set<SharedMember> sharedMemberSet;
 
     @Column(nullable = false)
     @NotBlank
