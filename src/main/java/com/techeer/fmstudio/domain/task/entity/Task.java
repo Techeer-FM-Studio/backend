@@ -24,6 +24,8 @@ public class Task extends BaseEntity {
     @Column(name = "task_id")
     private Long id;
 
+    // TODO : banner 엔티티 외래키 연결
+
     @OneToMany(mappedBy = "task")
     private Set<SharedMember> sharedMemberSet;
 

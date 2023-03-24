@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -39,6 +40,7 @@ public class TestMember extends BaseEntity {
     private String nickname;
 
     @Column(nullable = false)
+    @ColumnDefault("현재 상태를 알려주세요.")
     private String status;
 
     @Column(nullable = false)
