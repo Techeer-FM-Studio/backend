@@ -1,0 +1,19 @@
+name: Google Java Format Action
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+
+jobs:
+
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # v2 minimum required
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "—skip-sorting-imports —replace"
+          commitMessage: "Style: Google Java Format"
