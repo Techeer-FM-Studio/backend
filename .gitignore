@@ -10,6 +10,7 @@ build/
 
 ### springboot ###
 application-local.yml
+application-docker.yml
 
 ### STS ###
 .apt_generated
