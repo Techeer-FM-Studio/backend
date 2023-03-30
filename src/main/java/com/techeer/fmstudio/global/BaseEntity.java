@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class BaseEntity {
     @CreatedDate
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
@@ -24,8 +25,12 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     @Column(name = "is_active", nullable = false)
-    @ColumnDefault("true")
-    private Boolean isActive;
+    protected Boolean isActive;
+
+    @PrePersist
+    public void prePersist() {
+        this.isActive = this.isActive == null || this.isActive;
+    }
 
     protected void delete() {
         this.isActive = false;
