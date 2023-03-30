@@ -2,6 +2,7 @@ package com.techeer.fmstudio.domain.task.domain;
 
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -25,4 +26,10 @@ public class SharedMember extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_member_id", nullable = false)
     private TestMember testMember;
+
+    @Builder
+    public SharedMember(Task task, TestMember testMember) {
+        this.task = task;
+        this.testMember = testMember;
+    }
 }

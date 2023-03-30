@@ -1,7 +1,11 @@
 package com.techeer.fmstudio.domain.task.service;
 
+import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
 import com.techeer.fmstudio.domain.task.dao.TaskRepository;
+import com.techeer.fmstudio.domain.task.dao.TestMemberRepository;
+import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import com.techeer.fmstudio.domain.task.domain.Task;
+import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.mapper.TaskMapper;
 import com.techeer.fmstudio.domain.task.dto.request.TaskCreateRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,17 +13,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @RequiredArgsConstructor
 @Service
 @Slf4j
 public class TaskService {
+    private final TestMemberRepository testMemberRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final SharedMemberService sharedMemberService;
 
     @Transactional
     public Task createTask(TaskCreateRequest taskCreateRequest) {
         Task task = taskMapper.mapTaskCreateRequestToTaskEntity(taskCreateRequest);
-        return taskRepository.save(task);
+        Task savedTask = taskRepository.save(task);
+
+        TestMember foundTestMember = testMemberRepository.findTestMemberByNickname(taskCreateRequest.getWriter())
+                        .orElseThrow(EntityNotFoundException::new);
+        sharedMemberService.createSharedMember(savedTask, foundTestMember);
+        return savedTask;
     }
 
 }
