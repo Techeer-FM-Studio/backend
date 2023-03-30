@@ -2,7 +2,7 @@ package com.techeer.fmstudio.domain.task.dto.mapper;
 
 import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.request.TestMemberCreateRequest;
-import com.techeer.fmstudio.domain.task.dto.request.TestMemberInfo;
+import com.techeer.fmstudio.domain.task.dto.response.TestMemberInfo;
 import org.springframework.stereotype.Component;
 
 @Component

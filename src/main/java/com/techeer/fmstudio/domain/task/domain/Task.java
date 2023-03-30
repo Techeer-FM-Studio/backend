@@ -2,6 +2,7 @@ package com.techeer.fmstudio.domain.task.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
@@ -41,21 +42,21 @@ public class Task extends BaseEntity {
     private String memo;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startAt;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endAt;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     private Boolean isFinished;
 
     @Column(nullable = false)
-    @NotBlank
+    @NotNull
     private Boolean isOpened;
 
     @Builder

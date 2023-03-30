@@ -1,4 +1,4 @@
-package com.techeer.fmstudio.domain.task.dto.request;
+package com.techeer.fmstudio.domain.task.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
