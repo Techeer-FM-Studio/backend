@@ -1,4 +1,4 @@
-package com.techeer.fmstudio.domain.task.entity;
+package com.techeer.fmstudio.domain.task.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -68,5 +68,9 @@ public class Task extends BaseEntity {
         this.endAt = endAt;
         this.isFinished = isFinished;
         this.isOpened = isOpened;
+    }
+
+    public void deleteTask() {
+        this.delete();
     }
 }

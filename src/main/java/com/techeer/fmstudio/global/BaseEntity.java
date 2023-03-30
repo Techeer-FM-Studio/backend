@@ -27,4 +27,7 @@ public abstract class BaseEntity {
     @ColumnDefault("true")
     private Boolean isActive;
 
+    protected void delete() {
+        this.isActive = false;
+    }
 }
