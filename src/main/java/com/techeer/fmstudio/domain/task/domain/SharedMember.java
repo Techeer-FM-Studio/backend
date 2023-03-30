@@ -1,4 +1,4 @@
-package com.techeer.fmstudio.domain.task.entity;
+package com.techeer.fmstudio.domain.task.domain;
 
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
