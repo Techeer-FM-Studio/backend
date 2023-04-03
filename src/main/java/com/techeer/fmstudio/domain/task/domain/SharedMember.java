@@ -32,4 +32,8 @@ public class SharedMember extends BaseEntity {
         this.task = task;
         this.testMember = testMember;
     }
+
+    public void deleteSharedMember() {
+        this.delete();
+    }
 }

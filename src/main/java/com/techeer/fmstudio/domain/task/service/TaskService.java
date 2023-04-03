@@ -54,5 +54,6 @@ public class TaskService {
                 .orElseThrow(EntityNotFoundException::new);
 
         foundTask.deleteTask();
+        sharedMemberService.deleteSharedMember(taskId);
     }
 }
