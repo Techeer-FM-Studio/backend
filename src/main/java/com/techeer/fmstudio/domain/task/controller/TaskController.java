@@ -8,10 +8,7 @@ import com.techeer.fmstudio.domain.task.dto.response.TaskInfo;
 import com.techeer.fmstudio.domain.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,5 +26,11 @@ public class TaskController {
     public ResponseEntity<TaskInfo> updateTask(@RequestBody TaskUpdateRequest taskUpdateRequest) {
         TaskInfo taskInfo = taskService.updateTask(taskUpdateRequest);
         return ResponseEntity.ok(taskInfo);
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+        return ResponseEntity.ok("리뷰가 삭제되었습니다.");
     }
 }
