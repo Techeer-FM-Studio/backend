@@ -20,10 +20,10 @@ public class TaskUpdateRequest {
     private String title;
     @NotBlank
     private String memo;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startAt;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endAt;
     @NotNull
