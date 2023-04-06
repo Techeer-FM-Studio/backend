@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.techeer.fmstudio.domain.task.dto.request.TaskUpdateRequest;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -69,6 +70,15 @@ public class Task extends BaseEntity {
         this.endAt = endAt;
         this.isFinished = isFinished;
         this.isOpened = isOpened;
+    }
+
+    public void updateTask(TaskUpdateRequest taskUpdateRequest) {
+        this.title = taskUpdateRequest.getTitle();
+        this.memo = taskUpdateRequest.getMemo();
+        this.startAt = taskUpdateRequest.getStartAt();
+        this.endAt = taskUpdateRequest.getEndAt();
+        this.isFinished = taskUpdateRequest.getIsFinished();
+        this.isOpened = taskUpdateRequest.getIsOpened();
     }
 
     public void deleteTask() {

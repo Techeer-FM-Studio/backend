@@ -8,6 +8,8 @@ import com.techeer.fmstudio.domain.task.domain.Task;
 import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.mapper.TaskMapper;
 import com.techeer.fmstudio.domain.task.dto.request.TaskCreateRequest;
+import com.techeer.fmstudio.domain.task.dto.request.TaskUpdateRequest;
+import com.techeer.fmstudio.domain.task.dto.response.TaskInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,16 @@ public class TaskService {
                         .orElseThrow(EntityNotFoundException::new);
         sharedMemberService.createSharedMember(savedTask, foundTestMember);
         return savedTask;
+    }
+
+    public TaskInfo updateTask(TaskUpdateRequest taskUpdateRequest) {
+        Task foundTask = taskRepository.findById(taskUpdateRequest.getTaskId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        foundTask.updateTask(taskUpdateRequest);
+        Task updatedTask = taskRepository.save(foundTask);
+
+        return taskMapper.mapTaskEntityToTaskInfo(updatedTask);
     }
 
 }
