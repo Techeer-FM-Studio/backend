@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 
 
 @RequiredArgsConstructor
@@ -27,5 +28,12 @@ public class SharedMemberService {
         sharedMemberRepository.save(sharedMember);
     }
 
+    @Transactional
+    public void deleteSharedMember(Long taskId) {
+        SharedMember foundSharedMember = sharedMemberRepository.findSharedMemberByTask(taskId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        foundSharedMember.deleteSharedMember();
+    }
 
 }

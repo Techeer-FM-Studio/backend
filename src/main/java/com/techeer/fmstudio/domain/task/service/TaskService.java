@@ -37,6 +37,7 @@ public class TaskService {
         return savedTask;
     }
 
+    @Transactional
     public TaskInfo updateTask(TaskUpdateRequest taskUpdateRequest) {
         Task foundTask = taskRepository.findById(taskUpdateRequest.getTaskId())
                 .orElseThrow(EntityNotFoundException::new);
@@ -47,4 +48,12 @@ public class TaskService {
         return taskMapper.mapTaskEntityToTaskInfo(updatedTask);
     }
 
+    @Transactional
+    public void deleteTask(Long taskId) {
+        Task foundTask = taskRepository.findById(taskId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        foundTask.deleteTask();
+        sharedMemberService.deleteSharedMember(taskId);
+    }
 }
