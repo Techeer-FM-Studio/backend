@@ -20,4 +20,6 @@ public class TaskInfo {
     private LocalDateTime endAt;
     private Boolean isFinished;
     private Boolean isOpened;
+
+    private SharedMemberInfo sharedMemberInfo;
 }

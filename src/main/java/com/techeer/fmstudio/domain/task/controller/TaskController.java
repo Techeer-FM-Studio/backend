@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @RestController
 public class TaskController {
@@ -22,6 +23,12 @@ public class TaskController {
     public ResponseEntity<TaskInfo> createTask(@Valid @RequestBody TaskCreateRequest taskCreateRequest) {
         Task task = taskService.createTask(taskCreateRequest);
         return ResponseEntity.ok(taskMapper.mapTaskEntityToTaskInfo(task));
+    }
+
+    @GetMapping("/tasks/{taskId}")
+    public ResponseEntity<TaskInfo> getTask(@Valid @PathVariable Long taskId) {
+        TaskInfo taskInfo = taskService.getTask(taskId);
+        return ResponseEntity.ok(taskInfo);
     }
 
     @PutMapping("/tasks")

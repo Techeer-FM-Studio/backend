@@ -56,4 +56,12 @@ public class TaskService {
         foundTask.deleteTask();
         sharedMemberService.deleteSharedMember(taskId);
     }
+
+    @Transactional(readOnly = true)
+    public TaskInfo getTask(Long taskId) {
+        Task foundTask = taskRepository.findById(taskId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return taskMapper.mapTaskEntityToTaskInfo(foundTask);
+    }
 }
