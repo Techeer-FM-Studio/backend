@@ -4,6 +4,7 @@ import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.response.SharedMemberResponse;
 import com.techeer.fmstudio.domain.task.service.SharedMemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class SharedMemberController {
     public ResponseEntity<List<SharedMemberResponse>> getSharedMemberList(
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         List<SharedMemberResponse> sharedMemberResponseList = sharedMemberService.getSharedMemberList(page, size);
-        return ResponseEntity.ok(sharedMemberResponseList);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(sharedMemberResponseList);
     }
 }

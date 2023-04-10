@@ -6,6 +6,7 @@ import com.techeer.fmstudio.domain.task.dto.request.TestMemberCreateRequest;
 import com.techeer.fmstudio.domain.task.dto.response.TestMemberResponse;
 import com.techeer.fmstudio.domain.task.service.TestMemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class TestMemberController {
     private final TestMemberMapper testMemberMapper;
     @PostMapping("/testmembers")
     public ResponseEntity<TestMemberResponse> createTestMember(@RequestBody TestMemberCreateRequest testMemberCreateRequest) {
-        TestMember testMember = testMemberService.createTestMember(testMemberCreateRequest);
-        return ResponseEntity.ok(testMemberMapper.mapTestMemberEntityToTestMemberInfo(testMember));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(testMemberService.createTestMember(testMemberCreateRequest));
     }
 }
