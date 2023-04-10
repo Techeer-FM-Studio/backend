@@ -1,7 +1,5 @@
 package com.techeer.fmstudio.domain.member.dto;
 
-import com.techeer.fmstudio.domain.member.domain.MemberInterest;
-import com.techeer.fmstudio.domain.member.domain.MemberStatus;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,10 +15,10 @@ import java.util.List;
 public class MemberCreateRequest {
 
     @NotBlank
-    private String login_id;
+    private String loginId;
 
     @NotBlank
-    private String login_password;
+    private String loginPassword;
 
     @NotBlank
     private String nickname;
@@ -28,7 +26,7 @@ public class MemberCreateRequest {
     @NotNull
     private String introduction;
 
-    private MemberStatus status;
+    private String status;
 
-    private List<MemberInterest> interestList;
+    private List<String> interestList;
 }
