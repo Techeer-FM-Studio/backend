@@ -18,5 +18,5 @@ public class TaskResponse {
     private LocalDateTime startAt;
     private LocalDateTime endAt;
     private Boolean isFinished;
-    private List<String> sharedMemberInfoList;
+    private List<String> sharedMemberNicknameList;
 }

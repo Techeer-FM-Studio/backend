@@ -29,6 +29,6 @@ public class TaskCreateRequest {
     @NotNull
     private Boolean isFinished;
 
-    private List<String> sharedMembersId;
+    private List<String> sharedMembersNicknameList;
 
 }

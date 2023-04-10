@@ -31,13 +31,12 @@ public class TaskService {
         Task task = taskMapper.mapTaskCreateRequestToTaskEntity(taskCreateRequest);
         Task savedTask = taskRepository.save(task);
 
-        List<String> sharedMemberIdList = taskCreateRequest.getSharedMembersId();
+        List<String> sharedMemberNicknameList = taskCreateRequest.getSharedMembersNicknameList();
         List<String> foundTestMemberList = new ArrayList<>();
 
-        for(int i = 0; i < sharedMemberIdList.size(); i++) {
-            TestMember foundTestMember = testMemberRepository.findTestMemberByNickname(sharedMemberIdList.get(i))
+        for(int i = 0; i < sharedMemberNicknameList.size(); i++) {
+            TestMember foundTestMember = testMemberRepository.findTestMemberByNickname(sharedMemberNicknameList.get(i))
                     .orElseThrow(EntityNotFoundException::new);
-            // TODO : foundTestMember를 리스트로 저장해서 createSharedMember 한번에 저장
 
             sharedMemberService.createSharedMember(savedTask, foundTestMember);
             foundTestMemberList.add(foundTestMember.getNickname());
