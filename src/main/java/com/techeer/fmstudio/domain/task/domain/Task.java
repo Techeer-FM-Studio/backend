@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -28,8 +30,11 @@ public class Task extends BaseEntity {
 
     // TODO : banner 엔티티 외래키 연결
 
-    @OneToMany(mappedBy = "task")
-    private Set<SharedMember> sharedMemberSet;
+//    @OneToMany(mappedBy = "task")
+//    private List<SharedMember> sharedMemberList = new ArrayList<>();
+
+    @ElementCollection
+    private List<String> sharedMemberList;
 
     @Column(nullable = false)
     @NotBlank
@@ -56,20 +61,16 @@ public class Task extends BaseEntity {
     @NotNull
     private Boolean isFinished;
 
-    @Column(nullable = false)
-    @NotNull
-    private Boolean isOpened;
 
     @Builder
     public Task(String writer, String title, String memo, LocalDateTime startAt, LocalDateTime endAt,
-                Boolean isFinished, Boolean isOpened) {
+                Boolean isFinished) {
         this.writer = writer;
         this.title = title;
         this.memo = memo;
         this.startAt = startAt;
         this.endAt = endAt;
         this.isFinished = isFinished;
-        this.isOpened = isOpened;
     }
 
     public void updateTask(TaskUpdateRequest taskUpdateRequest) {
@@ -78,10 +79,13 @@ public class Task extends BaseEntity {
         this.startAt = taskUpdateRequest.getStartAt();
         this.endAt = taskUpdateRequest.getEndAt();
         this.isFinished = taskUpdateRequest.getIsFinished();
-        this.isOpened = taskUpdateRequest.getIsOpened();
     }
 
     public void deleteTask() {
         this.delete();
+    }
+
+    public void updateSharedMemberList(List<String> sharedMemberList) {
+        this.sharedMemberList = sharedMemberList;
     }
 }

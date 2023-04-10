@@ -4,6 +4,7 @@ import com.techeer.fmstudio.global.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,7 +19,7 @@ public class TestMember extends BaseEntity {
     private Long id;
 
     @OneToMany(mappedBy = "testMember")
-    private Set<SharedMember> sharedMemberSet;
+    private List<SharedMember> sharedMemberList;
 
     @Column(nullable = false)
     @NotBlank
