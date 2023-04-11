@@ -1,3 +1,5 @@
 spring:
   profiles:
-    include: docker
+    include:
+      - docker
+      - dev
