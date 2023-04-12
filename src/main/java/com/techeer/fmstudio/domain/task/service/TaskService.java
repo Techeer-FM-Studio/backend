@@ -83,6 +83,20 @@ public class TaskService {
     }
 
     @Transactional(readOnly = true)
+    public List<TaskResponse> getPrivateTaskAndSharedTask(String memberId, Integer year, Integer month) {
+        //TODO : 추가한 배너 리스트도 합쳐야함.
+        List<TaskResponse> foundTaskResponseList = new ArrayList<>();
+        
+        foundTaskResponseList.addAll(getWriterTaskByYearAndMonth(memberId, year, month));
+        foundTaskResponseList.addAll(getSharedTaskByYearAndMonth(memberId, year, month));
+
+        return foundTaskResponseList
+                .stream()
+                .sorted(Comparator.comparing(TaskResponse::getStartAt))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<TaskResponse> getWriterTaskByYearAndMonth(String memberId, Integer year, Integer month) {
         return taskRepository.findTasksByMemberIdAndStartAtOrderByStartAt(memberId, year, month)
                 .stream()
@@ -115,4 +129,6 @@ public class TaskService {
                 .sorted(Comparator.comparing(TaskResponse::getStartAt))
                 .toList();
     }
+
+
 }

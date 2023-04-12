@@ -49,14 +49,22 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/list")
-    public ResponseEntity<List<TaskResponse>> getAllTaskByYearAndMonth(@Valid @RequestParam String memberId,
+    public ResponseEntity<List<TaskResponse>> getPrivateTaskAndSharedTask(@Valid @RequestParam String memberId,
+                                                                       @Valid @RequestParam Integer year,
+                                                                       @Valid @RequestParam Integer month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(taskService.getPrivateTaskAndSharedTask(memberId, year, month));
+    }
+
+    @GetMapping("/tasks/privacy/list")
+    public ResponseEntity<List<TaskResponse>> getWriterTaskByYearAndMonth(@Valid @RequestParam String memberId,
                                                                     @Valid @RequestParam Integer year,
                                                                     @Valid @RequestParam Integer month) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(taskService.getWriterTaskByYearAndMonth(memberId, year, month));
     }
 
-    @GetMapping("/tasks/list/shared_task")
+    @GetMapping("/tasks/sharing/list")
     public ResponseEntity<List<TaskResponse>> getSharedTaskByYearAndMonth(@Valid @RequestParam String memberId,
                                                                           @Valid @RequestParam Integer year,
                                                                           @Valid @RequestParam Integer month) {
