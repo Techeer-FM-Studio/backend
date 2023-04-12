@@ -26,7 +26,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public TaskResponse mapTaskEntityToTaskInfo(Task task) {
+    public TaskResponse mapTaskEntityToTaskResponse(Task task) {
         return TaskResponse.builder()
                 .taskId(task.getId())
                 .writer(task.getWriter())
@@ -39,7 +39,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public TaskResponse mapTaskEntityToTaskInfo(Task task, List<String> foundTestMemberList) {
+    public TaskResponse mapTaskEntityToTaskResponse(Task task, List<String> foundTestMemberList) {
         return TaskResponse.builder()
                 .taskId(task.getId())
                 .writer(task.getWriter())

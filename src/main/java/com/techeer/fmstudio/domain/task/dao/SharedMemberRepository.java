@@ -20,4 +20,7 @@ public interface SharedMemberRepository extends JpaRepository<SharedMember, Long
 
     @Query("select s from SharedMember s where s.isActive is true")
     Page<SharedMember> findSharedMembersWithPagination(Pageable pageable);
+
+    @Query("select s from SharedMember s where s.testMember = :testMember and s.isActive = true")
+    List<SharedMember> findSharedMembersByTestMember(TestMember testMember);
 }

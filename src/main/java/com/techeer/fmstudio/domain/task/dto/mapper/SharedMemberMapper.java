@@ -1,6 +1,7 @@
 package com.techeer.fmstudio.domain.task.dto.mapper;
 
 import com.techeer.fmstudio.domain.task.domain.SharedMember;
+import com.techeer.fmstudio.domain.task.domain.Task;
 import com.techeer.fmstudio.domain.task.dto.response.SharedMemberResponse;
 import org.springframework.stereotype.Component;
 
@@ -11,5 +12,9 @@ public class SharedMemberMapper {
                 .testMemberId(sharedMember.getTestMember().getId())
                 .taskId(sharedMember.getTask().getId())
                 .build();
+    }
+
+    public Long mapSharedMemberEntityToTaskEntity(SharedMember sharedMember) {
+        return sharedMember.getTask().getId();
     }
 }

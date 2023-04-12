@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -45,5 +46,21 @@ public class TaskController {
         taskService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("리뷰가 삭제되었습니다.");
+    }
+
+    @GetMapping("/tasks/list")
+    public ResponseEntity<List<TaskResponse>> getAllTaskByYearAndMonth(@Valid @RequestParam String memberId,
+                                                                    @Valid @RequestParam Integer year,
+                                                                    @Valid @RequestParam Integer month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(taskService.getWriterTaskByYearAndMonth(memberId, year, month));
+    }
+
+    @GetMapping("/tasks/list/shared_task")
+    public ResponseEntity<List<TaskResponse>> getSharedTaskByYearAndMonth(@Valid @RequestParam String memberId,
+                                                                          @Valid @RequestParam Integer year,
+                                                                          @Valid @RequestParam Integer month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(taskService.getSharedTaskByYearAndMonth(memberId, year, month));
     }
 }
