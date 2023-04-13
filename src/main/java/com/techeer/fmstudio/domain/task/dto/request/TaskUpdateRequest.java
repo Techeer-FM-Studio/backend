@@ -28,6 +28,4 @@ public class TaskUpdateRequest {
     private LocalDateTime endAt;
     @NotNull
     private Boolean isFinished;
-    @NotNull
-    private Boolean isOpened;
 }

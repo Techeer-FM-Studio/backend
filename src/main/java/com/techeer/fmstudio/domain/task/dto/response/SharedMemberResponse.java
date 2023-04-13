@@ -7,9 +7,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @AllArgsConstructor
-public class TestMemberInfo {
-    private String nickname;
-    private String status;
-    private String introduction;
-    private String interests;
+public class SharedMemberResponse {
+    private Long testMemberId;
+    private Long taskId;
 }

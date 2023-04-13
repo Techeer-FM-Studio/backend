@@ -2,14 +2,14 @@ package com.techeer.fmstudio.domain.task.dto.mapper;
 
 import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.request.TestMemberCreateRequest;
-import com.techeer.fmstudio.domain.task.dto.response.TestMemberInfo;
+import com.techeer.fmstudio.domain.task.dto.response.TestMemberResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TestMemberMapper {
 
-    public TestMemberInfo mapTestMemberEntityToTestMemberInfo(TestMember testMember) {
-        return TestMemberInfo.builder()
+    public TestMemberResponse mapTestMemberEntityToTestMemberInfo(TestMember testMember) {
+        return TestMemberResponse.builder()
                 .nickname(testMember.getNickname())
                 .status(testMember.getStatus())
                 .introduction(testMember.getIntroduction())
@@ -17,8 +17,8 @@ public class TestMemberMapper {
                 .build();
     }
 
-    public TestMemberInfo mapTestMemberCreateRequestToTestMemberInfo(TestMemberCreateRequest testMemberCreateRequest) {
-        return TestMemberInfo.builder()
+    public TestMemberResponse mapTestMemberCreateRequestToTestMemberInfo(TestMemberCreateRequest testMemberCreateRequest) {
+        return TestMemberResponse.builder()
                 .nickname(testMemberCreateRequest.getNickname())
                 .interests(testMemberCreateRequest.getInterests())
                 .introduction(testMemberCreateRequest.getIntroduction())
