@@ -25,12 +25,8 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     @Column(name = "is_active", nullable = false)
+    @ColumnDefault("true")
     protected Boolean isActive;
-
-    @PrePersist
-    public void prePersist() {
-        this.isActive = this.isActive == null || this.isActive;
-    }
 
     protected void delete() {
         this.isActive = false;
