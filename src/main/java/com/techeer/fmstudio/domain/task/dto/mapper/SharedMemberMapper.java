@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class SharedMemberMapper {
     public SharedMemberResponse mapSharedMemberEntityToSharedMemberInfo(SharedMember sharedMember) {
         return SharedMemberResponse.builder()
-                .testMemberId(sharedMember.getTestMember().getId())
+                .testMemberId(sharedMember.getMemberEntity().getId())
                 .taskId(sharedMember.getTask().getId())
                 .build();
     }

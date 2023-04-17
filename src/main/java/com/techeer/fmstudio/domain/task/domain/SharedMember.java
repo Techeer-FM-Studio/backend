@@ -1,5 +1,6 @@
 package com.techeer.fmstudio.domain.task.domain;
 
+import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,13 +25,13 @@ public class SharedMember extends BaseEntity {
 
     // TODO : Member 엔티티가 구현되면 변경
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "test_member_id", nullable = false)
-    private TestMember testMember;
+    @JoinColumn(name = "member_id", nullable = false)
+    private MemberEntity memberEntity;
 
     @Builder
-    public SharedMember(Task task, TestMember testMember) {
+    public SharedMember(Task task, MemberEntity memberEntity) {
         this.task = task;
-        this.testMember = testMember;
+        this.memberEntity = memberEntity;
     }
 
     public void deleteSharedMember() {

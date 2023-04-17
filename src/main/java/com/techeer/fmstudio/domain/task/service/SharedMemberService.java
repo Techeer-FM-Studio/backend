@@ -1,9 +1,9 @@
 package com.techeer.fmstudio.domain.task.service;
 
+import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
 import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import com.techeer.fmstudio.domain.task.domain.Task;
-import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.response.SharedMemberResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +26,10 @@ public class SharedMemberService {
 
 
     @Transactional
-    public void createSharedMember(Task task, TestMember testMember) {
+    public void createSharedMember(Task task, MemberEntity memberEntity) {
         SharedMember sharedMember = SharedMember.builder()
                 .task(task)
-                .testMember(testMember)
+                .memberEntity(memberEntity)
                 .build();
 
         sharedMemberRepository.save(sharedMember);
