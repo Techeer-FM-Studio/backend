@@ -34,4 +34,11 @@ public class SharedMemberController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(sharedMemberService.createSharedMemberById(sharedMemberCreateRequest));
     }
+
+    @DeleteMapping("/shared-members/{id}")
+    public ResponseEntity<String> deleteSharedMember(@Valid @PathVariable Long id) {
+        sharedMemberService.deleteSharedMember(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("일정에서 공유된 사용자가 삭제되었습니다.");
+    }
 }
