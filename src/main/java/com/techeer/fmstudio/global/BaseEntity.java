@@ -27,6 +27,8 @@ public abstract class BaseEntity {
     @Column(name = "is_active", nullable = false)
     protected Boolean isActive;
 
+
+    // TODO : isActive Spring Data JPA로 통일
     @PrePersist
     public void prePersist() {
         this.isActive = this.isActive == null || this.isActive;
