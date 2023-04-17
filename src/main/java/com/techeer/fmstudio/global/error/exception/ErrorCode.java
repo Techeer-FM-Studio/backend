@@ -13,6 +13,7 @@ public enum ErrorCode {
     NOT_FOUND_BANNER_ENTITY(400, "B001", "존재하지 않는 Banner 입니다."),
     NOT_FOUND_MEMBER_ENTITY(400, "M001", "존재하지 않는 Member 입니다."),
     NOT_FOUND_TASK_ENTITY(400, "T001", "존재하지 않는 Task 입니다."),
+    NOT_FOUND_SHARED_MEMBER_ENTITY(400, "S001", "존재하지 않는 SharedMember 입니다.")
     ;
 
     private final int status;

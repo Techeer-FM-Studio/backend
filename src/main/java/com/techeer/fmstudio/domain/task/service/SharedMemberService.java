@@ -6,6 +6,7 @@ import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import com.techeer.fmstudio.domain.task.domain.Task;
 import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.response.SharedMemberResponse;
+import com.techeer.fmstudio.domain.task.exception.NotFoundSharedMemberException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -38,7 +39,7 @@ public class SharedMemberService {
     @Transactional
     public void deleteSharedMember(Long taskId) {
         SharedMember foundSharedMember = sharedMemberRepository.findSharedMemberByTask(taskId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(NotFoundSharedMemberException::new);
 
         foundSharedMember.deleteSharedMember();
     }
