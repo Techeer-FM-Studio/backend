@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class SharedMemberResponse {
-    private Long testMemberId;
     private Long taskId;
+    private Long memberId;
+
 }
