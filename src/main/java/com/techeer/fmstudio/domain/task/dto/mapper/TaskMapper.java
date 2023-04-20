@@ -12,8 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class TaskMapper {
-    private final SharedMemberRepository sharedMemberRepository;
-    private final TestMemberMapper testMemberMapper;
 
     public Task mapTaskCreateRequestToTaskEntity(TaskCreateRequest taskCreateRequest) {
         return Task.builder()
@@ -39,7 +37,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public TaskResponse mapTaskEntityToTaskResponse(Task task, List<String> foundTestMemberList) {
+    public TaskResponse mapTaskEntityToTaskResponse(Task task, List<String> foundMemberEntityList) {
         return TaskResponse.builder()
                 .taskId(task.getId())
                 .writer(task.getWriter())
@@ -48,7 +46,7 @@ public class TaskMapper {
                 .startAt(task.getStartAt())
                 .endAt(task.getEndAt())
                 .isFinished(task.getIsFinished())
-                .sharedMemberNicknameList(foundTestMemberList)
+                .sharedMemberNicknameList(foundMemberEntityList)
                 .build();
     }
 

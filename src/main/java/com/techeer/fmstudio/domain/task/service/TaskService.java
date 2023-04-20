@@ -1,15 +1,17 @@
 package com.techeer.fmstudio.domain.task.service;
 
+import com.techeer.fmstudio.domain.member.dao.MemberRepository;
+import com.techeer.fmstudio.domain.member.domain.MemberEntity;
+import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
 import com.techeer.fmstudio.domain.task.dao.TaskRepository;
-import com.techeer.fmstudio.domain.task.dao.TestMemberRepository;
 import com.techeer.fmstudio.domain.task.domain.Task;
-import com.techeer.fmstudio.domain.task.domain.TestMember;
 import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.mapper.TaskMapper;
 import com.techeer.fmstudio.domain.task.dto.request.TaskCreateRequest;
 import com.techeer.fmstudio.domain.task.dto.request.TaskUpdateRequest;
 import com.techeer.fmstudio.domain.task.dto.response.TaskResponse;
+import com.techeer.fmstudio.domain.task.exception.NotFoundTaskException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class TaskService {
+    private final MemberRepository memberRepository;
     private final SharedMemberRepository sharedMemberRepository;
-    private final TestMemberRepository testMemberRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final SharedMemberService sharedMemberService;
@@ -39,25 +41,25 @@ public class TaskService {
         Task savedTask = taskRepository.save(task);
 
         List<String> sharedMemberNicknameList = taskCreateRequest.getSharedMembersNicknameList();
-        List<String> foundTestMemberList = new ArrayList<>();
+        List<String> foundMemberList = new ArrayList<>();
 
         for(int i = 0; i < sharedMemberNicknameList.size(); i++) {
-            TestMember foundTestMember = testMemberRepository.findTestMemberByNickname(sharedMemberNicknameList.get(i))
-                    .orElseThrow(EntityNotFoundException::new);
+            MemberEntity foundMember = memberRepository.findMemberEntityByNickname(sharedMemberNicknameList.get(i))
+                    .orElseThrow(NotFoundMemberException::new);
 
-            sharedMemberService.createSharedMember(savedTask, foundTestMember);
-            foundTestMemberList.add(foundTestMember.getNickname());
+            sharedMemberService.createSharedMember(savedTask, foundMember);
+            foundMemberList.add(foundMember.getNickname());
         }
 
-        savedTask.updateSharedMemberList(foundTestMemberList);
+        savedTask.updateSharedMemberList(foundMemberList);
 
-        return taskMapper.mapTaskEntityToTaskResponse(savedTask, foundTestMemberList);
+        return taskMapper.mapTaskEntityToTaskResponse(savedTask, foundMemberList);
     }
 
     @Transactional
     public TaskResponse updateTask(TaskUpdateRequest taskUpdateRequest) {
         Task foundTask = taskRepository.findById(taskUpdateRequest.getTaskId())
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(NotFoundTaskException::new);
 
         foundTask.updateTask(taskUpdateRequest);
         Task updatedTask = taskRepository.save(foundTask);
@@ -68,7 +70,7 @@ public class TaskService {
     @Transactional
     public void deleteTask(Long taskId) {
         Task foundTask = taskRepository.findById(taskId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(NotFoundTaskException::new);
 
         foundTask.deleteTask();
         sharedMemberService.deleteSharedMember(taskId);
@@ -77,14 +79,13 @@ public class TaskService {
     @Transactional(readOnly = true)
     public TaskResponse getTask(Long taskId) {
         Task foundTask = taskRepository.findById(taskId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(NotFoundTaskException::new);
 
         return taskMapper.mapTaskEntityToTaskResponse(foundTask);
     }
 
     @Transactional(readOnly = true)
     public List<TaskResponse> getPrivateTaskAndSharedTask(String memberId, Integer year, Integer month) {
-        //TODO : 추가한 배너 리스트도 합쳐야함.
         List<TaskResponse> foundTaskResponseList = new ArrayList<>();
         
         foundTaskResponseList.addAll(getWriterTaskByYearAndMonth(memberId, year, month));
@@ -106,10 +107,10 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public List<TaskResponse> getSharedTaskByYearAndMonth(String memberId, Integer year, Integer month) {
-        TestMember foundMemberId = testMemberRepository.findTestMemberByNickname(memberId)
-                .orElseThrow(EntityNotFoundException::new);
+        MemberEntity foundMemberId = memberRepository.findMemberEntityByNickname(memberId)
+                .orElseThrow(NotFoundTaskException::new);
 
-        List<Long> taskIdList = sharedMemberRepository.findSharedMembersByTestMember(foundMemberId)
+        List<Long> taskIdList = sharedMemberRepository.findSharedMembersByMemberEntity(foundMemberId)
                 .stream()
                 .map(sharedMemberMapper::mapSharedMemberEntityToTaskEntity)
                 .toList();

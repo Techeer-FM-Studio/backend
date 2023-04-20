@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TaskUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long taskId;
     @NotBlank
     private String title;
