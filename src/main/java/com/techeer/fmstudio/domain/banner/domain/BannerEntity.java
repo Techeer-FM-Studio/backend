@@ -51,7 +51,6 @@ public class BannerEntity extends BaseEntity {
     private boolean isFinished;
 
     @OneToMany(mappedBy = "banner" , fetch = FetchType.LAZY)
-    @ToString.Exclude
     private List<Comment> commentList;
 
     @Column(name = "image_url")
