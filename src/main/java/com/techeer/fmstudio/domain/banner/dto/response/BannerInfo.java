@@ -1,4 +1,4 @@
-package com.techeer.fmstudio.domain.banner.dto;
+package com.techeer.fmstudio.domain.banner.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;

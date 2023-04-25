@@ -1,4 +1,4 @@
-package com.techeer.fmstudio.domain.banner.dto;
+package com.techeer.fmstudio.domain.banner.dto.request;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

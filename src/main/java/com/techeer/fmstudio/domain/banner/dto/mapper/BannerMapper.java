@@ -1,6 +1,7 @@
-package com.techeer.fmstudio.domain.banner.dto;
+package com.techeer.fmstudio.domain.banner.dto.mapper;
 
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
+import com.techeer.fmstudio.domain.banner.dto.response.BannerInfo;
 import org.springframework.stereotype.Component;
 
 @Component
