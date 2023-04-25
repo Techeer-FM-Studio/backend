@@ -13,7 +13,6 @@ import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,6 @@ public class CustomBannerService {
 
     private final MyBannerListRepository myBannerListRepository;
 
-    @Transactional
     public BannerEntity create(CustomBannerCreateRequest request) {
 
         MemberEntity member = memberRepository
@@ -47,7 +45,6 @@ public class CustomBannerService {
         return bannerRepository.save(newBanner);
     }
 
-    @Transactional
     public BannerEntity delete(Long id) {
 
         BannerEntity foundBanner = bannerRepository
@@ -59,7 +56,6 @@ public class CustomBannerService {
         return foundBanner;
     }
 
-    @Transactional
     public MyBannerList addMyBanner(CustomBannerAddMyBannerRequest request, Long bannerId){
         MemberEntity member = memberRepository.findMemberEntityByNickname(request.getNickname()).orElseThrow(NotFoundMemberException::new);
         BannerEntity banner = bannerRepository.findById(bannerId).orElseThrow(NotFoundBannerException::new);
