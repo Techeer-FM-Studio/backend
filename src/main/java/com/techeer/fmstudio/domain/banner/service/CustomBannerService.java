@@ -13,7 +13,6 @@ import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,12 +43,6 @@ public class CustomBannerService {
         }
 
         return bannerRepository.save(newBanner);
-    }
-
-    @Transactional(readOnly = true)
-    public BannerEntity getOne(Long id){
-        return bannerRepository.findById(id)
-                .orElseThrow(NotFoundBannerException::new);
     }
 
     public BannerEntity delete(Long id) {
