@@ -19,12 +19,4 @@ public interface BannerRepository extends JpaRepository<BannerEntity, Long> {
             "AND LOWER(b.bannerType) = LOWER(:#{#type.name()})" +
             "ORDER BY b.createdAt asc")
     Page<BannerEntity> findBannerByTypeWithPagination(Pageable pageable, @Param("type") BannerType type);
-
-    @Query("UPDATE BannerEntity b SET b.title = :#{#entity.title}," +
-            "b.memo = :#{#entity.memo}," +
-            "b.startAt = :#{entity.startAt}," +
-            "b.endAt = :#{entity.endAt} " +
-            "WHERE b.isActive = true " +
-            "AND b.id = :#{#entity.id}")
-    void updateById(@Param("entity") BannerEntity entity);
 }

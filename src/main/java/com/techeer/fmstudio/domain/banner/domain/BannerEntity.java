@@ -94,11 +94,20 @@ public class BannerEntity extends BaseEntity {
     }
 
     public void update(String title, String memo,
-                       LocalDateTime startAt, LocalDateTime endAt) {
+                       LocalDateTime startAt, LocalDateTime endAt, List<String> imageUrl) {
         this.title = title;
         this.memo = memo;
         this.startAt = startAt;
         this.endAt = endAt;
+        if(!imageUrl.isEmpty()) {
+            List<String> newImageUrl = new ArrayList<>();
+            for(String url : imageUrl){
+                newImageUrl.add(url);
+            }
+            this.imageUrl = newImageUrl;
+        }else{
+            this.imageUrl = null;
+        }
     }
 
     public void deleteBanner(){
