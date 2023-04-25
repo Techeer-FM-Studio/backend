@@ -1,6 +1,5 @@
 package com.techeer.fmstudio.domain.member.domain;
 
-import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.*;
 
