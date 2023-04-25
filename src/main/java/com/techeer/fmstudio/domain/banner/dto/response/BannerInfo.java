@@ -2,7 +2,7 @@ package com.techeer.fmstudio.domain.banner.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;
-import com.techeer.fmstudio.domain.banner.domain.Comment;
+import com.techeer.fmstudio.domain.banner.domain.CommentEntity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -29,7 +29,7 @@ public class BannerInfo {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endAt;
 
-    private List<Comment> commentList;
+    private List<CommentEntity> commentList;
 
     private List<String> imageUrl;
 

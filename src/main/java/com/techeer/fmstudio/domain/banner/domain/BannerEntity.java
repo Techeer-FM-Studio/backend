@@ -51,7 +51,7 @@ public class BannerEntity extends BaseEntity {
     private boolean isFinished;
 
     @OneToMany(mappedBy = "banner" , fetch = FetchType.LAZY)
-    private List<Comment> commentList;
+    private List<CommentEntity> commentList;
 
     @Column(name = "image_url")
     @ElementCollection
@@ -89,7 +89,7 @@ public class BannerEntity extends BaseEntity {
         this.imageUrl.addAll(imageUrl);
     }
 
-    public void addComment(List<Comment> comments) {
+    public void addComment(List<CommentEntity> comments) {
         this.commentList.addAll(comments);
     }
 
