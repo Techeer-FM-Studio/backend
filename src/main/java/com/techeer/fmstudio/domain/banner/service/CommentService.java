@@ -18,7 +18,6 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
-
     private final BannerRepository bannerRepository;
 
     public CommentEntity create(CommentCreateRequest request, Long bannerId){
@@ -36,5 +35,4 @@ public class CommentService {
 
         return commentRepository.save(newComment);
     }
-
 }
