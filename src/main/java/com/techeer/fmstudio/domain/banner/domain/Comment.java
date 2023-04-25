@@ -26,7 +26,7 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "banner_id")
-    private Banner banner;
+    private BannerEntity banner;
 
     @Column(name = "content")
     private String content;
