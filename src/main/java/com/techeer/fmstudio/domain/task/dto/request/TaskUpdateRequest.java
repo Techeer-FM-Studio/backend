@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TaskUpdateRequest {
 
-    @NotBlank
+    @NotNull
     private Long taskId;
     @NotBlank
     private String title;
@@ -28,6 +28,4 @@ public class TaskUpdateRequest {
     private LocalDateTime endAt;
     @NotNull
     private Boolean isFinished;
-    @NotNull
-    private Boolean isOpened;
 }
