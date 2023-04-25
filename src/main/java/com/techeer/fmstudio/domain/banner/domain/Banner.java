@@ -48,7 +48,7 @@ public class Banner {
     @Column(name = "is_opened")
     private boolean isOpened;
 
-    @OneToMany(mappedBy = "banner" , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "banner", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Comment> commentList;
 
@@ -60,6 +60,9 @@ public class Banner {
 
     @Column(name = "like_count")
     private Integer likeCnt;
+
+    @Column(name = "views_count")
+    private Integer viewsCnt;
 
     @Builder
     public Banner(MemberEntity member, String title, String memo,

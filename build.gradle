@@ -45,6 +45,10 @@ dependencies {
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+	implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
+	implementation 'com.google.guava:guava:r05'
 }
 
 //tasks.named('test') {
