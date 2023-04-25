@@ -1,6 +1,7 @@
-package com.techeer.fmstudio.domain.banner.dto;
+package com.techeer.fmstudio.domain.banner.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techeer.fmstudio.domain.banner.domain.BannerType;
 import com.techeer.fmstudio.domain.banner.domain.Comment;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +13,11 @@ import java.util.List;
 @Builder
 public class BannerInfo {
 
-    private Long id;
+    private BannerType type;
 
-    private Long ownerId;
+    private Long bannerId;
+
+    private String nickname;
 
     private String title;
 
@@ -26,13 +29,17 @@ public class BannerInfo {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endAt;
 
-    private boolean isFinished;
-
-    private boolean isOpened;
-
     private List<Comment> commentList;
 
     private List<String> imageUrl;
 
     private Integer likeCnt;
+
+    private boolean isFinished;
+
+    private boolean isLiked;
+
+    private boolean isIncluded;
+
+    private Integer readCnt;
 }

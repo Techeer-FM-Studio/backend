@@ -1,5 +1,6 @@
 package com.techeer.fmstudio.domain.member.domain;
 
+import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class MemberEntity extends BaseEntity {
     private String loginPassword;
 
     @NotBlank
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique=true)
     private String nickname;
 
     @Column(name = "member_status")
