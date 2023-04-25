@@ -10,4 +10,10 @@ public class S3Mapper {
                 .url(url)
                 .build();
     }
+
+    public S3DeleteResponse toDeleteResponseDto(String filename){
+        return S3DeleteResponse.builder()
+                .filename(filename)
+                .build();
+    }
 }
