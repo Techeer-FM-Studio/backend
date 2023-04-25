@@ -1,6 +1,7 @@
 package com.techeer.fmstudio.domain.banner.domain;
 
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
+import com.techeer.fmstudio.global.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,11 +16,15 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "banner")
-public class Banner {
+public class BannerEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "banner_type")
+    private BannerType bannerType;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,11 +50,7 @@ public class Banner {
     @Column(name = "is_finished")
     private boolean isFinished;
 
-    @Column(name = "is_opened")
-    private boolean isOpened;
-
-    @OneToMany(mappedBy = "banner", fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "banner" , fetch = FetchType.LAZY)
     private List<Comment> commentList;
 
     @Column(name = "image_url")
@@ -61,30 +62,27 @@ public class Banner {
     @Column(name = "like_count")
     private Integer likeCnt;
 
-    @Column(name = "views_count")
-    private Integer viewsCnt;
+    @Column(name = "read_count")
+    private Integer readCnt;
 
     @Builder
-    public Banner(MemberEntity member, String title, String memo,
-                  LocalDateTime startAt, LocalDateTime endAt) {
+    public BannerEntity(BannerType bannerType, MemberEntity member, String title, String memo,
+                        LocalDateTime startAt, LocalDateTime endAt) {
+        this.bannerType = bannerType;
         this.member = member;
         this.title = title;
         this.memo = memo;
         this.startAt = startAt;
         this.endAt = endAt;
         this.isFinished = false;
-        this.isOpened = false;
         this.likeCnt = 0;
         this.commentList = new ArrayList<>();
         this.imageUrl = new ArrayList<>();
+        this.readCnt = 0;
     }
 
     public void makeFinished() {
         this.isFinished = true;
-    }
-
-    public void makeOpened() {
-        this.isOpened = true;
     }
 
     public void addImageUrl(List<String> imageUrl) {
@@ -101,5 +99,9 @@ public class Banner {
         this.memo = memo;
         this.startAt = startAt;
         this.endAt = endAt;
+    }
+
+    public void deleteBanner(){
+        this.delete();
     }
 }

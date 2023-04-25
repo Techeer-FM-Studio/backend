@@ -29,7 +29,7 @@ public class MemberEntity extends BaseEntity {
     private String loginPassword;
 
     @NotBlank
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique=true)
     private String nickname;
 
     @Column(name = "member_status")

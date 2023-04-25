@@ -1,6 +1,5 @@
-package com.techeer.fmstudio.domain.banner.dto;
+package com.techeer.fmstudio.domain.banner.dto.request;
 
-import com.techeer.fmstudio.domain.banner.domain.Comment;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +14,10 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class BannerCreateRequest {
+public class CustomBannerCreateRequest {
 
-    @NotNull(message = "Member Id of banner owner is required")
-    private Long memberId;
+    @NotNull(message = "Member nickname of banner owner is required")
+    private String nickname;
 
     @NotBlank(message = "Banner title is required")
     private String title;
@@ -33,8 +32,6 @@ public class BannerCreateRequest {
     @NotNull(message = "Banner end date is required")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endAt;
-
-    private List<Comment> commentList;
 
     private List<String> imageUrl;
 }

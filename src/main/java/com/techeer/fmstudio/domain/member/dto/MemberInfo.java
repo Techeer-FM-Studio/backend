@@ -7,8 +7,7 @@ import lombok.Data;
 @Builder
 public class MemberInfo {
     private Long memberId;
-    private String login_id;
+    private String loginId;
 
-    private String login_password;
-
+    private String nickname;
 }

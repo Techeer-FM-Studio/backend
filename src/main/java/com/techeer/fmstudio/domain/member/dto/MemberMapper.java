@@ -29,8 +29,8 @@ public class MemberMapper {
     public MemberInfo toInfo(MemberEntity entity) {
         return MemberInfo.builder()
                 .memberId(entity.getId())
-                .login_id(entity.getLoginId())
-                .login_password(entity.getLoginPassword())
+                .loginId(entity.getLoginId())
+                .nickname(entity.getNickname())
                 .build();
     }
 }
