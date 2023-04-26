@@ -2,7 +2,6 @@ spring:
   profiles:
     include:
       - docker
-      - dev
 
 cloud:
   aws:
