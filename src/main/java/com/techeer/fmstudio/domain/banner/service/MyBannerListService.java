@@ -14,6 +14,8 @@ import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MyBannerListService {
@@ -28,6 +30,10 @@ public class MyBannerListService {
                 .member(member)
                 .build();
         return myBannerListRepository.save(myBannerList);
+    }
+
+    public List<BannerEntity> getMyBannerWithPagination(String memberId, int year, int month) {
+        return myBannerListRepository.findMyBannerByMemberIdAndYearAndMonth(memberId, year, month);
     }
 
     public void deleteMyBanner(MyBannerDeleteRequest request, Long bannerId){
