@@ -5,6 +5,7 @@ import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerInfo;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
+import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
 import com.techeer.fmstudio.domain.banner.service.CustomBannerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,16 @@ public class CustomBannerController {
         BannerEntity foundBanner = customBannerService.getOne(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(bannerMapper.toBannerInfo(foundBanner));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<BannerPageInfo> getCustomBannerByPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ){
+        BannerPageInfo foundBannerList = customBannerService.getCustomBannerByPagination(page,size);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(foundBannerList);
     }
 
     @PatchMapping("/{id}")
