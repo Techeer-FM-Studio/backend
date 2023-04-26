@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/v1/banner/images")
+@RequestMapping("/api/v1/banners/images")
 @RequiredArgsConstructor
 public class S3Controller {
 
