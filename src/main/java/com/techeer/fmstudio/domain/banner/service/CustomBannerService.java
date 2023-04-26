@@ -15,7 +15,6 @@ import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

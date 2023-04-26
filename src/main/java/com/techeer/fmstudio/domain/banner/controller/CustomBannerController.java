@@ -55,7 +55,7 @@ public class CustomBannerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> create(@PathVariable Long id) {
         BannerEntity deletedBanner = bannerService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("배너 id " + deletedBanner.getId().toString() + "가 삭제 되었습니다.");
