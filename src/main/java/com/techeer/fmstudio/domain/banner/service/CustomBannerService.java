@@ -1,17 +1,19 @@
 package com.techeer.fmstudio.domain.banner.service;
 
 import com.techeer.fmstudio.domain.banner.dao.BannerRepository;
-import com.techeer.fmstudio.domain.banner.dao.MyBannerListRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
+import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
 import com.techeer.fmstudio.domain.banner.exception.NotFoundBannerException;
 import com.techeer.fmstudio.domain.member.dao.MemberRepository;
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +23,6 @@ public class CustomBannerService {
 
     private final BannerRepository bannerRepository;
     private final MemberRepository memberRepository;
-    private final MyBannerListRepository myBannerListRepository;
-
     private final BannerMapper bannerMapper;
 
     public BannerEntity create(CustomBannerCreateRequest request) {
@@ -51,6 +51,13 @@ public class CustomBannerService {
     public BannerEntity getOne(Long id){
         return bannerRepository.findById(id)
                 .orElseThrow(NotFoundBannerException::new);
+    }
+
+    @Transactional(readOnly = true)
+    public BannerPageInfo getCustomBannerByPagination(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<BannerEntity> pageResult = bannerRepository.findBannerByTypeWithPagination(pageRequest, BannerType.CUSTOM);
+        return bannerMapper.mapEntityToBannerPageInfo(pageResult, page, size);
     }
 
     public String update(CustomBannerUpdateRequest request, Long id) {
