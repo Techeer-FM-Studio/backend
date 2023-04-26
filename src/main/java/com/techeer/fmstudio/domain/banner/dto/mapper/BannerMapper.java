@@ -11,8 +11,6 @@ import java.util.List;
 @Component
 public class BannerMapper {
     public BannerInfo toBannerInfo(BannerEntity banner) {
-
-
         return BannerInfo.builder()
                 .type(banner.getBannerType())
                 .id(banner.getId())
@@ -21,7 +19,10 @@ public class BannerMapper {
                 .memo(banner.getMemo())
                 .startAt(banner.getStartAt())
                 .endAt(banner.getEndAt())
+                // TODO : isFinished, isLiked, isIncluded 기능 구현해야 딩
                 .isFinished(banner.getIsFinished())
+                .isLiked(false)
+                .isIncluded(false)
                 .imageUrl(banner.getImageUrl())
                 .likeCnt(banner.getLikeCnt())
                 .readCnt(banner.getReadCnt())
