@@ -7,6 +7,7 @@ import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.MyBannerList;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
+import com.techeer.fmstudio.domain.banner.dto.request.MyBannerDeleteRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
 import com.techeer.fmstudio.domain.banner.exception.NotFoundBannerException;
 import com.techeer.fmstudio.domain.member.dao.MemberRepository;
@@ -43,5 +44,11 @@ public class WholeBannerService {
                 .member(member)
                 .build();
         return myBannerListRepository.save(myBannerList);
+    }
+
+    public void deleteMyBanner(MyBannerDeleteRequest request, Long bannerId){
+        MemberEntity member = memberRepository.findMemberEntityByNickname(request.getNickname())
+                .orElseThrow(NotFoundMemberException::new);
+        myBannerListRepository.deleteByMemberIdAndBannerId(member.getId(), bannerId);
     }
 }

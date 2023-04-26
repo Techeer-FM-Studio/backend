@@ -3,7 +3,9 @@ package com.techeer.fmstudio.domain.banner.controller;
 import com.techeer.fmstudio.domain.banner.domain.MyBannerList;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
+import com.techeer.fmstudio.domain.banner.dto.request.MyBannerDeleteRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
+import com.techeer.fmstudio.domain.banner.dto.response.DeleteResponse;
 import com.techeer.fmstudio.domain.banner.dto.response.MyBannerInfo;
 import com.techeer.fmstudio.domain.banner.service.WholeBannerService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,7 @@ public class WholeBannerController {
                 .body(foundBannerList);
     }
 
-    @PostMapping("mybanners/{id}")
+    @PostMapping("/mybanners/{id}")
     public ResponseEntity<MyBannerInfo> addBannerToMyList(
             @Valid @RequestBody CustomBannerAddMyBannerRequest request,
             @PathVariable Long id
@@ -45,5 +47,17 @@ public class WholeBannerController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(myBannerInfo);
+    }
+
+    @DeleteMapping("mybanners/{bannerId}")
+    public ResponseEntity<DeleteResponse> deleteMyBanner(
+            @Valid @RequestBody MyBannerDeleteRequest request,
+            @PathVariable Long bannerId
+    ){
+
+        wholeBannerService.deleteMyBanner(request, bannerId);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(DeleteResponse.builder().id(bannerId).build());
     }
 }

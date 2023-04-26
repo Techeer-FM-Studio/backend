@@ -6,6 +6,7 @@ import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerInfo;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
+import com.techeer.fmstudio.domain.banner.dto.response.DeleteResponse;
 import com.techeer.fmstudio.domain.banner.service.CustomBannerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -56,9 +57,9 @@ public class CustomBannerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<DeleteResponse> delete(@PathVariable Long id) {
         BannerEntity deletedBanner = customBannerService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
-                .body("배너 id " + deletedBanner.getId().toString() + "가 삭제 되었습니다.");
+                .body(DeleteResponse.builder().id(id).build());
     }
 }
