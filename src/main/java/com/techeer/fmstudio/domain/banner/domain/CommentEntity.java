@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "comments")
+@Table(name = "comment")
 public class CommentEntity extends BaseEntity {
 
     @Id

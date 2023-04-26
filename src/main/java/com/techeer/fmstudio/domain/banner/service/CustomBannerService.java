@@ -5,7 +5,6 @@ import com.techeer.fmstudio.domain.banner.dao.MyBannerListRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;
 import com.techeer.fmstudio.domain.banner.domain.MyBannerList;
-import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
@@ -24,7 +23,6 @@ public class CustomBannerService {
     private final BannerRepository bannerRepository;
     private final MemberRepository memberRepository;
     private final MyBannerListRepository myBannerListRepository;
-    private final BannerMapper bannerMapper;
 
     public BannerEntity create(CustomBannerCreateRequest request) {
 

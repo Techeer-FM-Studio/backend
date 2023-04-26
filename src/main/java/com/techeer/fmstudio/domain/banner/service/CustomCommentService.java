@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CustomCommentService {
 
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
@@ -37,4 +37,7 @@ public class CommentService {
         return commentRepository.save(newComment);
     }
 
+    public void delete(Long id){
+        commentRepository.deleteById(id);
+    }
 }
