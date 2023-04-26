@@ -20,4 +20,6 @@ public interface BannerRepository extends JpaRepository<BannerEntity, Long> {
             "ORDER BY b.createdAt asc")
     Page<BannerEntity> findBannerByTypeWithPagination(Pageable pageable, @Param("type") BannerType type);
 
+    @Query("SELECT b FROM BannerEntity b WHERE b.isActive = true ORDER BY b.createdAt asc")
+    Page<BannerEntity> findWholeBannerWithPagination(Pageable pageable);
 }

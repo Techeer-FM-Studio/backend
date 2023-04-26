@@ -7,9 +7,11 @@ import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerInfo;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
+import com.techeer.fmstudio.domain.banner.dto.response.BannerPageInfo;
 import com.techeer.fmstudio.domain.banner.dto.response.MyBannerInfo;
 import com.techeer.fmstudio.domain.banner.service.CustomBannerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +30,24 @@ public class CustomBannerController {
     public ResponseEntity<BannerInfo> create(@Valid @RequestBody CustomBannerCreateRequest request) {
         BannerEntity newBanner = bannerService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(bannerMapper.toInfo(newBanner));
+                .body(bannerMapper.toBannerInfo(newBanner));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BannerInfo> getOne(@PathVariable Long id){
         BannerEntity foundBanner = bannerService.getOne(id);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(bannerMapper.toInfo(foundBanner));
+                .body(bannerMapper.toBannerInfo(foundBanner));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<BannerPageInfo> getWholeBannerByPagination(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
+    ){
+        BannerPageInfo foundBannerList = bannerService.getWholeBannerByPagination(page,size);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(foundBannerList);
     }
 
     @PatchMapping("/{id}")
