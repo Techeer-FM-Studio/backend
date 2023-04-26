@@ -1,10 +1,10 @@
 package com.techeer.fmstudio.domain.banner.controller;
 
-import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.MyBannerList;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.MyBannerDeleteRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.DeleteResponse;
+import com.techeer.fmstudio.domain.banner.dto.response.MyBannerCreateInfo;
 import com.techeer.fmstudio.domain.banner.dto.response.MyBannerInfo;
 import com.techeer.fmstudio.domain.banner.service.MyBannerListService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ public class MyBannerListController {
     private final MyBannerListService myBannerListService;
 
     @PostMapping("/{id}")
-    public ResponseEntity<MyBannerInfo> addBannerToMyList(
+    public ResponseEntity<MyBannerCreateInfo> addBannerToMyList(
             @Valid @RequestBody CustomBannerAddMyBannerRequest request,
             @PathVariable Long id
     ){
 
         MyBannerList myBannerList = myBannerListService.addMyBanner(request, id);
-        MyBannerInfo myBannerInfo = MyBannerInfo.builder()
+        MyBannerCreateInfo myBannerInfo = MyBannerCreateInfo.builder()
                 .nickname(myBannerList.getMember().getNickname())
                 .bannerId(myBannerList.getBanner().getId())
                 .build();
@@ -39,7 +39,7 @@ public class MyBannerListController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<BannerEntity>> getMyBannerWithPagination(
+    public ResponseEntity<List<MyBannerInfo>> getMyBannerWithPagination(
             @RequestParam String memberId,
             @RequestParam int year,
             @RequestParam int month
