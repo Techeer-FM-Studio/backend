@@ -5,6 +5,7 @@ import com.techeer.fmstudio.domain.banner.dto.mapper.CommentMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CommentCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.CommentInfo;
 import com.techeer.fmstudio.domain.banner.dto.response.CommentPageInfo;
+import com.techeer.fmstudio.domain.banner.dto.response.DeleteResponse;
 import com.techeer.fmstudio.domain.banner.service.CustomCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,9 +45,9 @@ public class CustomCommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> delete(@PathVariable Long commentId){
+    public ResponseEntity<DeleteResponse> delete(@PathVariable Long commentId){
         commentService.delete(commentId);
         return ResponseEntity.status(HttpStatus.OK)
-                .body("삭제 되었습니다.");
+                .body(DeleteResponse.builder().id(commentId).build());
     }
 }
