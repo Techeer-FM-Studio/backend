@@ -1,6 +1,6 @@
 package com.techeer.fmstudio.domain.banner.service;
 
-import com.techeer.fmstudio.domain.banner.dao.CustomBannerRepository;
+import com.techeer.fmstudio.domain.banner.dao.BannerRepository;
 import com.techeer.fmstudio.domain.banner.dao.MyBannerListRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CustomBannerService {
 
-    private final CustomBannerRepository bannerRepository;
+    private final BannerRepository bannerRepository;
     private final MemberRepository memberRepository;
     private final MyBannerListRepository myBannerListRepository;
 

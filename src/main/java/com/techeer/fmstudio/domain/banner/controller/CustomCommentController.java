@@ -32,7 +32,7 @@ public class CustomCommentController {
     }
 
     @DeleteMapping("/{bannerId}/comments/{commentId}")
-    public ResponseEntity<String> delete(Long commentId){
+    public ResponseEntity<String> delete(@PathVariable Long commentId){
         commentService.delete(commentId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("삭제 되었습니다.");

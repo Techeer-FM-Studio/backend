@@ -1,6 +1,6 @@
 package com.techeer.fmstudio.domain.banner.service;
 
-import com.techeer.fmstudio.domain.banner.dao.CustomBannerRepository;
+import com.techeer.fmstudio.domain.banner.dao.BannerRepository;
 import com.techeer.fmstudio.domain.banner.dao.CommentRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.CommentEntity;
@@ -19,7 +19,7 @@ public class CustomCommentService {
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
-    private final CustomBannerRepository bannerRepository;
+    private final BannerRepository bannerRepository;
 
     public CommentEntity create(CommentCreateRequest request, Long bannerId){
         MemberEntity foundMember = memberRepository.findMemberEntityByNickname(request.getWriter())

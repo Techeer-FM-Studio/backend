@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface CustomBannerRepository extends JpaRepository<BannerEntity, Long> {
+public interface BannerRepository extends JpaRepository<BannerEntity, Long> {
 
     @Query("SELECT b FROM BannerEntity b WHERE b.isActive = true AND b.id = :bannerId")
     Optional<BannerEntity> findById(@Param("bannerId") Long bannerId);
