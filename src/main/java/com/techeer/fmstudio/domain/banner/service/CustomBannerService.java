@@ -4,8 +4,7 @@ import com.techeer.fmstudio.domain.banner.dao.BannerRepository;
 import com.techeer.fmstudio.domain.banner.dao.MyBannerListRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.BannerType;
-import com.techeer.fmstudio.domain.banner.domain.MyBannerList;
-import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
+import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
 import com.techeer.fmstudio.domain.banner.exception.NotFoundBannerException;
@@ -23,6 +22,8 @@ public class CustomBannerService {
     private final BannerRepository bannerRepository;
     private final MemberRepository memberRepository;
     private final MyBannerListRepository myBannerListRepository;
+
+    private final BannerMapper bannerMapper;
 
     public BannerEntity create(CustomBannerCreateRequest request) {
 
@@ -74,15 +75,5 @@ public class CustomBannerService {
         foundBanner.deleteBanner();
 
         return foundBanner;
-    }
-
-    public MyBannerList addMyBanner(CustomBannerAddMyBannerRequest request, Long bannerId){
-        MemberEntity member = memberRepository.findMemberEntityByNickname(request.getNickname()).orElseThrow(NotFoundMemberException::new);
-        BannerEntity banner = bannerRepository.findById(bannerId).orElseThrow(NotFoundBannerException::new);
-        MyBannerList myBannerList = MyBannerList.builder()
-                .banner(banner)
-                .member(member)
-                .build();
-        return myBannerListRepository.save(myBannerList);
     }
 }

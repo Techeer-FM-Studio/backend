@@ -1,5 +1,6 @@
 package com.techeer.fmstudio.domain.banner.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.global.BaseEntity;
 import lombok.*;
@@ -29,6 +30,7 @@ public class BannerEntity extends BaseEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private MemberEntity member;
 
     @NotBlank
@@ -48,9 +50,10 @@ public class BannerEntity extends BaseEntity {
     private LocalDateTime endAt;
 
     @Column(name = "is_finished")
-    private boolean isFinished;
+    private Boolean isFinished;
 
     @OneToMany(mappedBy = "banner" , fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<CommentEntity> commentList;
 
     @Column(name = "image_url")
