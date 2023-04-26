@@ -7,6 +7,7 @@ import com.techeer.fmstudio.domain.banner.dto.mapper.CommentMapper;
 import com.techeer.fmstudio.domain.banner.dto.request.CommentCreateRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerAddMyBannerRequest;
 import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerCreateRequest;
+import com.techeer.fmstudio.domain.banner.dto.request.CustomBannerUpdateRequest;
 import com.techeer.fmstudio.domain.banner.dto.response.BannerInfo;
 import com.techeer.fmstudio.domain.banner.dto.mapper.BannerMapper;
 import com.techeer.fmstudio.domain.banner.dto.response.CommentInfo;
@@ -35,6 +36,22 @@ public class CustomBannerController {
         BannerEntity newBanner = bannerService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(bannerMapper.toInfo(newBanner));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BannerInfo> getOne(@PathVariable Long id){
+        BannerEntity foundBanner = bannerService.getOne(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(bannerMapper.toInfo(foundBanner));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> update(
+            @Valid @RequestBody CustomBannerUpdateRequest request,
+            @PathVariable Long id
+            ){
+        String result = bannerService.update(request, id);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @DeleteMapping("/{id}")
