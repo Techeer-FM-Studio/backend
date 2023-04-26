@@ -1,6 +1,6 @@
 package com.techeer.fmstudio.domain.banner.service;
 
-import com.techeer.fmstudio.domain.banner.dao.BannerRepository;
+import com.techeer.fmstudio.domain.banner.dao.CustomBannerRepository;
 import com.techeer.fmstudio.domain.banner.dao.CommentRepository;
 import com.techeer.fmstudio.domain.banner.domain.BannerEntity;
 import com.techeer.fmstudio.domain.banner.domain.CommentEntity;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CustomCommentService {
 
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
 
-    private final BannerRepository bannerRepository;
+    private final CustomBannerRepository bannerRepository;
 
     public CommentEntity create(CommentCreateRequest request, Long bannerId){
         MemberEntity foundMember = memberRepository.findMemberEntityByNickname(request.getWriter())
@@ -37,4 +37,7 @@ public class CommentService {
         return commentRepository.save(newComment);
     }
 
+    public void delete(Long id){
+        commentRepository.deleteById(id);
+    }
 }
