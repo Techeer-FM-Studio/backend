@@ -22,6 +22,7 @@ public class SharedMemberController {
     private final SharedMemberMapper sharedMemberMapper;
 
     @GetMapping("/shared-members/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<List<SharedMemberResponse>> getSharedMemberList(
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         List<SharedMemberResponse> sharedMemberResponseList = sharedMemberService.getSharedMemberList(page, size);
@@ -30,12 +31,14 @@ public class SharedMemberController {
     }
 
     @PostMapping("/shared-members")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<SharedMemberResponse> createSharedMember(@Valid @RequestBody SharedMemberCreateRequest sharedMemberCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(sharedMemberService.createSharedMemberById(sharedMemberCreateRequest));
     }
 
     @DeleteMapping("/shared-members/{id}")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<String> deleteSharedMember(@Valid @PathVariable Long id) {
         sharedMemberService.deleteSharedMember(id);
         return ResponseEntity.status(HttpStatus.OK)

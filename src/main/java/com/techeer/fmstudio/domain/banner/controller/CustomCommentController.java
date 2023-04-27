@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/banners/custom/{bannerId}/comments")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class CustomCommentController {
 
     private final CustomCommentService commentService;

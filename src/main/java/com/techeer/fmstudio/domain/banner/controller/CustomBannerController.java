@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/banners/custom")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class CustomBannerController {
 
     private final CustomBannerService customBannerService;

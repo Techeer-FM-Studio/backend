@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/banners/mybanners")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class MyBannerListController {
 
     private final MyBannerListService myBannerListService;
