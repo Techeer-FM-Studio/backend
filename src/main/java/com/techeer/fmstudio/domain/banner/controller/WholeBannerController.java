@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/banners")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class WholeBannerController {
 
     private final WholeBannerService wholeBannerService;
