@@ -21,6 +21,7 @@ public class TaskController {
     private final TaskMapper taskMapper;
 
     @PostMapping("/tasks")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskCreateRequest taskCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(taskService.createTask(taskCreateRequest));
@@ -28,6 +29,7 @@ public class TaskController {
 
 
     @GetMapping("/tasks/{taskId}")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<TaskResponse> getTask(@Valid @PathVariable Long taskId) {
         TaskResponse taskResponse = taskService.getTask(taskId);
         return ResponseEntity.status(HttpStatus.OK)
@@ -35,6 +37,7 @@ public class TaskController {
     }
 
     @PutMapping("/tasks")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<TaskResponse> updateTask(@Valid @RequestBody TaskUpdateRequest taskUpdateRequest) {
         TaskResponse taskResponse = taskService.updateTask(taskUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK)
@@ -42,6 +45,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/tasks/{id}")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<String> deleteTask(@Valid @PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK)
@@ -49,6 +53,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<List<TaskResponse>> getPrivateTaskAndSharedTask(@Valid @RequestParam String memberId,
                                                                        @Valid @RequestParam Integer year,
                                                                        @Valid @RequestParam Integer month) {
@@ -57,6 +62,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/privacy/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<List<TaskResponse>> getWriterTaskByYearAndMonth(@Valid @RequestParam String memberId,
                                                                     @Valid @RequestParam Integer year,
                                                                     @Valid @RequestParam Integer month) {
@@ -65,6 +71,7 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/sharing/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<List<TaskResponse>> getSharedTaskByYearAndMonth(@Valid @RequestParam String memberId,
                                                                           @Valid @RequestParam Integer year,
                                                                           @Valid @RequestParam Integer month) {
