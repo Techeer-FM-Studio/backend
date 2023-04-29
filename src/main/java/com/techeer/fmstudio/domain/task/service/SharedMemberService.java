@@ -60,10 +60,7 @@ public class SharedMemberService {
 
     @Transactional
     public void deleteSharedMember(Long taskId) {
-        SharedMember foundSharedMember = sharedMemberRepository.findSharedMemberByTask(taskId)
-                .orElseThrow(NotFoundSharedMemberException::new);
-
-        foundSharedMember.deleteSharedMember();
+        sharedMemberRepository.findSharedMemberByTask(taskId).ifPresent(SharedMember::deleteSharedMember);
     }
 
     @Transactional(readOnly = true)
