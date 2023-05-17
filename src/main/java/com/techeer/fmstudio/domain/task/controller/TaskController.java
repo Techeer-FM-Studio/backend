@@ -61,6 +61,24 @@ public class TaskController {
                 .body(taskService.getPrivateTaskAndSharedTask(memberId, year, month));
     }
 
+    @GetMapping("/previous-month-tasks/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+    public ResponseEntity<List<TaskResponse>> getPreviousMonthTask(@Valid @RequestParam String memberId,
+                                                                          @Valid @RequestParam Integer year,
+                                                                          @Valid @RequestParam Integer month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(taskService.getPreviousMonthTask(memberId, year, month));
+    }
+
+    @GetMapping("/next-month-tasks/list")
+    @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+    public ResponseEntity<List<TaskResponse>> getNextMonthTask(@Valid @RequestParam String memberId,
+                                                               @Valid @RequestParam Integer year,
+                                                               @Valid @RequestParam Integer month) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(taskService.getNextMonthTask(memberId, year, month));
+    }
+
     @GetMapping("/tasks/privacy/list")
     @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
     public ResponseEntity<List<TaskResponse>> getWriterTaskByYearAndMonth(@Valid @RequestParam String memberId,

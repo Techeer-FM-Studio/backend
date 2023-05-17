@@ -17,11 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -90,11 +92,67 @@ public class TaskService {
         
         foundTaskResponseList.addAll(getWriterTaskByYearAndMonth(memberId, year, month));
         foundTaskResponseList.addAll(getSharedTaskByYearAndMonth(memberId, year, month));
+        foundTaskResponseList.addAll(getPreviousMonthTask(memberId, year, month));
+        foundTaskResponseList.addAll(getNextMonthTask(memberId, year, month));
 
         return foundTaskResponseList
                 .stream()
                 .sorted(Comparator.comparing(TaskResponse::getStartAt))
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskResponse> getPreviousMonthTask(String memberId, int year, int month) {
+        int numberOfDay = getNumberOfFirstDay(year, month); // 월요일은 1, 일요일은 7
+        int remainingDay = getRemainingDay(numberOfDay);
+        YearMonth yearMonth = YearMonth.of(year, month);
+        LocalDate firstDayOfMonth = yearMonth.atDay(1);
+        Date firstDateOfMonth = Date.valueOf(firstDayOfMonth); // 해당 월의 첫번째 날짜
+
+        return taskRepository.findTaskOfBeforeMonth(memberId, firstDateOfMonth, remainingDay)
+                .stream()
+                .map(taskMapper::mapTaskEntityToTaskResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskResponse> getNextMonthTask(String memberId, int year, int month) {
+        int numberOfDay = getNumberOfLastDay(year, month); // 월요일은 1, 일요일은 7
+        int remainingDay = getRemainingDay(numberOfDay);
+        int lastDayOfMonth = getLastDayOfMonth(year, month); // 해당 월의 마지막 날짜
+        LocalDate date = LocalDate.of(year, month, lastDayOfMonth);
+        Date lastDateOfMonth = Date.valueOf(date);
+
+        return taskRepository.findTaskOfAfterMonth(memberId, lastDateOfMonth, remainingDay)
+                .stream()
+                .map(taskMapper::mapTaskEntityToTaskResponse)
+                .collect(Collectors.toList());
+    }
+
+    public int getRemainingDay(int numberOfDay) {
+        if(numberOfDay == 7) {
+            return 0;
+        } else {
+            return numberOfDay;
+        }
+    }
+
+    public int getNumberOfLastDay(int year, int month) {
+        LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+        LocalDate lastDayOfMonth = LocalDate.of(year, month, firstDayOfMonth.lengthOfMonth());
+        DayOfWeek dayOfWeek = lastDayOfMonth.getDayOfWeek();
+        return dayOfWeek.getValue(); // 월요일은 1, 일요일은 7
+    }
+
+    public int getNumberOfFirstDay(int year, int month) {
+        LocalDate date = LocalDate.of(year, month, 1);
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek.getValue(); // 월요일은 1, 일요일은 7
+    }
+
+    public int getLastDayOfMonth(int year, int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        return yearMonth.lengthOfMonth(); // 해당 월의 마지막 날짜
     }
 
     @Transactional(readOnly = true)
