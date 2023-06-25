@@ -3,8 +3,12 @@ package com.techeer.fmstudio.domain.task.service;
 import com.techeer.fmstudio.domain.member.dao.MemberRepository;
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
+import com.techeer.fmstudio.domain.notification.domain.TaskNotification;
+import com.techeer.fmstudio.domain.notification.dto.request.TaskNotificationCreateRequest;
+import com.techeer.fmstudio.domain.notification.service.TaskNotificationService;
 import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
 import com.techeer.fmstudio.domain.task.dao.TaskRepository;
+import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import com.techeer.fmstudio.domain.task.domain.Task;
 import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.mapper.TaskMapper;
@@ -36,6 +40,7 @@ public class TaskService {
     private final TaskMapper taskMapper;
     private final SharedMemberService sharedMemberService;
     private final SharedMemberMapper sharedMemberMapper;
+    private final TaskNotificationService taskNotificationService;
 
     @Transactional
     public TaskResponse createTask(TaskCreateRequest taskCreateRequest) {
@@ -43,19 +48,31 @@ public class TaskService {
         Task savedTask = taskRepository.save(task);
 
         List<String> sharedMemberNicknameList = taskCreateRequest.getSharedMembersNicknameList();
-        List<String> foundMemberList = new ArrayList<>();
+        List<String> foundSharedMemberList = new ArrayList<>();
+        List<SharedMember> validatedSharedMemberList = new ArrayList<>();
 
-        for(int i = 0; i < sharedMemberNicknameList.size(); i++) {
-            MemberEntity foundMember = memberRepository.findMemberEntityByNickname(sharedMemberNicknameList.get(i))
-                    .orElseThrow(NotFoundMemberException::new);
+        for (String s : sharedMemberNicknameList) {
+            MemberEntity foundMember = memberRepository.findMemberEntityByNickname(s)
+                .orElseThrow(NotFoundMemberException::new);
 
-            sharedMemberService.createSharedMember(savedTask, foundMember);
-            foundMemberList.add(foundMember.getNickname());
+            SharedMember sharedMember = sharedMemberService.createSharedMember(savedTask,
+                foundMember);
+            foundSharedMemberList.add(foundMember.getNickname());
+            validatedSharedMemberList.add(sharedMember);
         }
 
-        savedTask.updateSharedMemberList(foundMemberList);
+        savedTask.updateSharedMemberList(foundSharedMemberList);
 
-        return taskMapper.mapTaskEntityToTaskResponse(savedTask, foundMemberList);
+        for (SharedMember sharedMember : validatedSharedMemberList) {
+            TaskNotificationCreateRequest taskNotificationCreateRequest = TaskNotificationCreateRequest.builder()
+                .sharedMember(sharedMember)
+                .receiverNickname(sharedMember.getMemberEntity().getNickname())
+                .senderNickname(sharedMember.getTask().getWriter())
+                .build();
+            taskNotificationService.createTaskNotification(taskNotificationCreateRequest);
+        }
+
+        return taskMapper.mapTaskEntityToTaskResponse(savedTask, foundSharedMemberList);
     }
 
     @Transactional

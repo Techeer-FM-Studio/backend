@@ -33,13 +33,14 @@ public class SharedMemberService {
 
 
     @Transactional
-    public void createSharedMember(Task task, MemberEntity memberEntity) {
+    public SharedMember createSharedMember(Task task, MemberEntity memberEntity) {
         SharedMember sharedMember = SharedMember.builder()
                 .task(task)
                 .memberEntity(memberEntity)
                 .build();
 
         sharedMemberRepository.save(sharedMember);
+        return sharedMember;
     }
 
     @Transactional
