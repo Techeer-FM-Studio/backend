@@ -1,5 +1,6 @@
 package com.techeer.fmstudio.domain.notification.dto.request;
 
+import com.techeer.fmstudio.domain.notification.domain.TaskNotificationStatus;
 import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

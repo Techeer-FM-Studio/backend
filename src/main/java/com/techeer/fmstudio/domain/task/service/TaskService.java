@@ -4,6 +4,7 @@ import com.techeer.fmstudio.domain.member.dao.MemberRepository;
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import com.techeer.fmstudio.domain.notification.domain.TaskNotification;
+import com.techeer.fmstudio.domain.notification.domain.TaskNotificationStatus;
 import com.techeer.fmstudio.domain.notification.dto.request.TaskNotificationCreateRequest;
 import com.techeer.fmstudio.domain.notification.service.TaskNotificationService;
 import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
@@ -69,6 +70,7 @@ public class TaskService {
                 .receiverNickname(sharedMember.getMemberEntity().getNickname())
                 .senderNickname(sharedMember.getTask().getWriter())
                 .build();
+
             taskNotificationService.createTaskNotification(taskNotificationCreateRequest);
         }
 

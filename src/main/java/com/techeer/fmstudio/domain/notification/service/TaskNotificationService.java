@@ -4,7 +4,6 @@ import com.techeer.fmstudio.domain.notification.dao.TaskNotificationRepository;
 import com.techeer.fmstudio.domain.notification.dao.TaskNotificationStatusRepository;
 import com.techeer.fmstudio.domain.notification.domain.TaskNotification;
 import com.techeer.fmstudio.domain.notification.domain.TaskNotificationStatus;
-import com.techeer.fmstudio.domain.notification.dto.mapper.TaskNotificationMapper;
 import com.techeer.fmstudio.domain.notification.dto.request.TaskNotificationCreateRequest;
 import com.techeer.fmstudio.domain.notification.exception.NotFoundTaskNotificationException;
 import com.techeer.fmstudio.domain.task.dto.request.TaskCreateRequest;
@@ -19,21 +18,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class TaskNotificationService {
     private final TaskNotificationRepository taskNotificationRepository;
     private final TaskNotificationStatusRepository taskNotificationStatusRepository;
-    private final TaskNotificationMapper taskNotificationMapper;
 
     @Transactional
     public void createTaskNotification(TaskNotificationCreateRequest taskNotificationCreateRequest) {
-        TaskNotification taskNotification = taskNotificationMapper.mapTaskNotificationCreateRequestToTaskNotificationEntity(
-            taskNotificationCreateRequest);
-        TaskNotification savedTaskNotification = taskNotificationRepository.save(taskNotification);
-
         TaskNotificationStatus taskNotificationStatus = TaskNotificationStatus.builder()
-            .taskNotification(savedTaskNotification)
             .acceptStatus(false)
             .readStatus(false)
             .build();
 
-        taskNotificationStatusRepository.save(taskNotificationStatus);
+        TaskNotificationStatus savedTaskNotificationStatus = taskNotificationStatusRepository.save(taskNotificationStatus);
+
+        TaskNotification taskNotification = TaskNotification.builder()
+            .taskNotificationStatus(savedTaskNotificationStatus)
+            .sharedMember(taskNotificationCreateRequest.getSharedMember())
+            .receiverNickname(taskNotificationCreateRequest.getReceiverNickname())
+            .senderNickname(taskNotificationCreateRequest.getSenderNickname())
+            .readStatus(false)
+            .build();
+
+        taskNotificationRepository.save(taskNotification);
     }
 
     @Transactional
@@ -41,6 +44,10 @@ public class TaskNotificationService {
         TaskNotification taskNotification = taskNotificationRepository.findById(taskNotificationId)
             .orElseThrow(
                 NotFoundTaskNotificationException::new);
+
+        TaskNotificationStatus taskNotificationStatus = taskNotification.getTaskNotificationStatus();
+        taskNotificationStatus.deleteTaskNotificationStatus();
+
         taskNotification.deleteTaskNotification();
     }
 }

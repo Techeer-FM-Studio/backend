@@ -20,10 +20,6 @@ public class TaskNotificationStatus extends BaseEntity {
     @Column(name = "task_notification_status_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_notification_id", nullable = false)
-    private TaskNotification taskNotification;
-
     @Column(nullable = false)
     private Boolean acceptStatus;
 
@@ -31,8 +27,7 @@ public class TaskNotificationStatus extends BaseEntity {
     private Boolean readStatus;
 
     @Builder
-    public TaskNotificationStatus(TaskNotification taskNotification, Boolean acceptStatus, Boolean readStatus) {
-        this.taskNotification = taskNotification;
+    public TaskNotificationStatus(Boolean acceptStatus, Boolean readStatus) {
         this.acceptStatus = acceptStatus;
         this.readStatus = readStatus;
     }

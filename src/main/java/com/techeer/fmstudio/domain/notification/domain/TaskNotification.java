@@ -24,6 +24,10 @@ public class TaskNotification extends BaseEntity {
     @JoinColumn(name = "shared_member_id", nullable = false)
     private SharedMember sharedMember;
 
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "task_notification_status_id", nullable = false)
+    private TaskNotificationStatus taskNotificationStatus;
+
     @Column(nullable = false)
     private String receiverNickname;
 
@@ -34,8 +38,9 @@ public class TaskNotification extends BaseEntity {
     private Boolean readStatus;
 
     @Builder
-    public TaskNotification(SharedMember sharedMember, String receiverNickname, String senderNickname, Boolean readStatus) {
+    public TaskNotification(SharedMember sharedMember, TaskNotificationStatus taskNotificationStatus, String receiverNickname, String senderNickname, Boolean readStatus) {
         this.sharedMember = sharedMember;
+        this.taskNotificationStatus = taskNotificationStatus;
         this.receiverNickname = receiverNickname;
         this.senderNickname = senderNickname;
         this.readStatus = readStatus;

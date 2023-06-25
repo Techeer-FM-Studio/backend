@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 public class TaskController {
     private final TaskService taskService;
-    private final TaskMapper taskMapper;
 
     @PostMapping("/tasks")
     @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
