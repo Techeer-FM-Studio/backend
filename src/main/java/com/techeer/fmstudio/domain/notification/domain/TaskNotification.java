@@ -24,7 +24,7 @@ public class TaskNotification extends BaseEntity {
     @JoinColumn(name = "shared_member_id", nullable = false)
     private SharedMember sharedMember;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_notification_status_id", nullable = false)
     private TaskNotificationStatus taskNotificationStatus;
 
