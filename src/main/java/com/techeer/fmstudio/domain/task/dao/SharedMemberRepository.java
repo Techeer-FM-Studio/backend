@@ -14,7 +14,7 @@ public interface SharedMemberRepository extends JpaRepository<SharedMember, Long
     @Query("select s from SharedMember s where s.id = :id and s.isActive = true")
     Optional<SharedMember> findById(Long id);
 
-    @Query("select s from SharedMember s where s.id = :taskId and s.isActive = true")
+    @Query("select s from SharedMember s where s.task.id = :taskId and s.isActive = true")
     Optional<SharedMember> findSharedMemberByTask(Long taskId);
 
     @Query("select s from SharedMember s where s.isActive is true")
