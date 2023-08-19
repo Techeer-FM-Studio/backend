@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("select t from Task t where t.id = :id and t.isActive = true")
-    Optional<Task> findById(Long id);
+    Optional<Task> findById(@Param("id") Long id);
 
     @Query("select t from Task t where t.writer = :memberId " +
             "and year(t.startAt) = :year " +

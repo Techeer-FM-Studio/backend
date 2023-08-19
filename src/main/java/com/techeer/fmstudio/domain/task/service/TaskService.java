@@ -1,10 +1,14 @@
 package com.techeer.fmstudio.domain.task.service;
 
+import static com.techeer.fmstudio.domain.member.domain.MemberInterest.BACKEND;
+
 import com.techeer.fmstudio.domain.member.dao.MemberRepository;
 import com.techeer.fmstudio.domain.member.domain.MemberEntity;
+import com.techeer.fmstudio.domain.member.domain.MemberStatus;
 import com.techeer.fmstudio.domain.member.exception.NotFoundMemberException;
 import com.techeer.fmstudio.domain.task.dao.SharedMemberRepository;
 import com.techeer.fmstudio.domain.task.dao.TaskRepository;
+import com.techeer.fmstudio.domain.task.domain.SharedMember;
 import com.techeer.fmstudio.domain.task.domain.Task;
 import com.techeer.fmstudio.domain.task.dto.mapper.SharedMemberMapper;
 import com.techeer.fmstudio.domain.task.dto.mapper.TaskMapper;
@@ -12,6 +16,7 @@ import com.techeer.fmstudio.domain.task.dto.request.TaskCreateRequest;
 import com.techeer.fmstudio.domain.task.dto.request.TaskUpdateRequest;
 import com.techeer.fmstudio.domain.task.dto.response.TaskResponse;
 import com.techeer.fmstudio.domain.task.exception.NotFoundTaskException;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,6 +41,23 @@ public class TaskService {
     private final TaskMapper taskMapper;
     private final SharedMemberService sharedMemberService;
     private final SharedMemberMapper sharedMemberMapper;
+
+    @Transactional
+    public void createManyTask() {
+        for(int i = 0; i < 1000000; i++) {
+            Task testTask = new Task("string-" + i, "string-" + i, "string-" + i, LocalDateTime.now(), LocalDateTime.now(), false);
+            taskRepository.save(testTask);
+
+            MemberEntity testMemberEntity = new MemberEntity("member-" + i, "member-" + i, "member-" + i, "member-" + i,
+                new ArrayList<>(
+                    BACKEND.ordinal()), MemberStatus.NORMAL);
+            memberRepository.save(testMemberEntity);
+
+            SharedMember testSharedMember = new SharedMember(testTask, testMemberEntity);
+            sharedMemberRepository.save(testSharedMember);
+        }
+
+    }
 
     @Transactional
     public TaskResponse createTask(TaskCreateRequest taskCreateRequest) {

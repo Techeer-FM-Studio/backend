@@ -27,6 +27,10 @@ public class TaskController {
                 .body(taskService.createTask(taskCreateRequest));
     }
 
+    @GetMapping("/tasks/create/many")
+    public void createManyTask() {
+        taskService.createManyTask();
+    }
 
     @GetMapping("/tasks/{taskId}")
     @CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
